@@ -5,26 +5,24 @@ import seaborn as sns
 
 def createDataframe(apColumns):
 
-    # print(len(apColumns[0]))
-    # print(len(apColumns[1]))
-    # print(len(apColumns[2]))
-    # print(len(apColumns[3]))
-    # print(len(apColumns[4]))
-    # print(len(apColumns[5]))
-    # print(len(apColumns[6]))
-    # print(len(apColumns[7]))
+    print(len(apColumns[0]))
+    print(len(apColumns[1]))
+    print(len(apColumns[2]))
+    print(len(apColumns[3]))
+    print(len(apColumns[4]))
+    print(len(apColumns[5]))
+    print(len(apColumns[6]))
 
     apColumns = {
         'Date': apColumns[0],
-        'Area': apColumns[1],
-        'Adress': apColumns[2],
-        'Size': apColumns[3],
-        'Rooms': apColumns[4],
-        'Broker': apColumns[5],
-        'Rent': apColumns[6],
-        'Price': apColumns[7],
+        'Adress': apColumns[1],
+        'Size': apColumns[2],
+        'Rooms': apColumns[3],
+        'Broker': apColumns[4],
+        'Rent': apColumns[5],
+        'Price': apColumns[6],
     }
 
-    #apDf = pd.DataFrame(data=apColumns)
+    apDf = pd.DataFrame(data=apColumns)
 
-    # return apDf
+    return apDf
