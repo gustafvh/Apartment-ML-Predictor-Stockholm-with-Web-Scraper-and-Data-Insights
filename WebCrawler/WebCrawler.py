@@ -7,7 +7,10 @@ import numpy as np
 import time
 
 
-def initCrawler():
+def initCrawler(minSize, maxSize):
+
+    minSize = str(minSize)
+    maxSize = str(maxSize)
 
     options = Options()
     options.add_argument("--incognito")
@@ -16,7 +19,11 @@ def initCrawler():
     driver = webdriver.Chrome(options=options,
                               executable_path="/Users/gustafvh/Heavy Learning/Machine Learning/Stockholm Apartments/Application/chromedriver")
 
-    url = "https://www.hemnet.se/salda/bostader?housing_form_groups%5B%5D=apartments&location_ids%5B%5D=18031&page=1"
+    # url = "https://www.hemnet.se/salda/bostader?housing_form_groups%5B%5D=apartments&location_ids%5B%5D=18031&page=1"
+
+    url = "https://www.hemnet.se/salda/bostader?location_ids%5B%5D=18031&item_types%5B%5D=bostadsratt&living_area_min=" + \
+        minSize + "&living_area_max=" + maxSize + "&sold_age=all"
+
     driver.get(url)
 
     # Click Privacy Policy pop-up
