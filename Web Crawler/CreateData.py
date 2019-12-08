@@ -5,14 +5,6 @@ import seaborn as sns
 
 def createDataframe(apColumns):
 
-    print(len(apColumns[0]))
-    print(len(apColumns[1]))
-    print(len(apColumns[2]))
-    print(len(apColumns[3]))
-    print(len(apColumns[4]))
-    print(len(apColumns[5]))
-    print(len(apColumns[6]))
-
     apColumns = {
         'Date': apColumns[0],
         'Adress': apColumns[1],
