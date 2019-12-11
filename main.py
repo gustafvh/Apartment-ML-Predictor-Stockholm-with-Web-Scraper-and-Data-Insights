@@ -1,13 +1,18 @@
 import pandas as pd
 import numpy as np
 from WebCrawler.WebCrawler import *
+from ProcessData import cleanAndConvertToNum
+from YelpApi import updateDfWithYelpDetails
+from VisualizeData import showBarChart, showHeatMap, showScatterPlotLine
+from Model import getPredictions
+from Accuracy import printMeanAbsoluteError, printMeanAbsolutePercentageError
 
 import time
 
 
 def getRowsFromHnet(driver, numberOfPages):
     # One page is 50 rows
-    #driver = initCrawler(20, 25)
+    # driver = initCrawler(20, 25)
 
     apData = pd.DataFrame()
     apData = getMultiplePages(driver, numberOfPages)
@@ -32,16 +37,57 @@ def getAllSegments():
     return apData
 
 
-def main():
+def createYelpData():
     apData = pd.read_csv('./Data/hnetData.csv')
 
-    # apD = pd.DataFrame()
-    # # apData = apData.astype('float')
-    # apD = getAllSegments()
+    apData = cleanAndConvertToNum(apData)
 
-    #apData = apData[apData.duplicated(keep=False)]
-    print(apData.info())
-    # writeToCsv(apD)
+    # creates file named 'yelpDataX-Y.csv'
+    apData = updateDfWithYelpDetails(apData, 0, 4000)
+
+
+def cleanData():
+    apData = pd.read_csv('./Data/hnetData.csv')
+
+    apData = cleanAndConvertToNum(apData)
+
+    apData.to_csv('./Data/CleanHnetData.csv', index=False)
+
+
+def main():
+
+    # Step 1 - Get all data from hNet
+    # getAllSegments()
+
+    # Step 2 - Clean data with formatting and output to new csv file
+    # cleanData()
+
+    # Step 3 - Read CSV and make import and add Yelp Data
+    apData = pd.read_csv('./Data/CleanHnetData.csv')
+    #apData = updateDfWithYelpDetails(apData, 0, 4000)
+
+    # Step 4 - Read final datafile, and use as dataframe
+
+    # Step 5 - Get a trained model based on dataframe
+    featuresToTrainOn = ['Date', 'Size', 'Rooms']
+    target = 'Price'
+    numOfPredictions = 10
+
+    # Predictions is array with predictions
+    predictions, valPredictionTarget, model = getPredictions(
+        apData, featuresToTrainOn, target)
+
+    printMeanAbsoluteError(predictions, valPredictionTarget)
+    printMeanAbsolutePercentageError(predictions, valPredictionTarget)
+
+    #############################################
+
+    #showBarChart(apData.head(1000), 'Price')
+    #showScatterPlotLine(apData, 'Size', 'Price')
+
+    # print(apData.info())
+    # print(apData.head(10))
 
 
 main()
+# createYelpData()
