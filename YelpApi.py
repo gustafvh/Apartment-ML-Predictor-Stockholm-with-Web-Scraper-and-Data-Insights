@@ -4,6 +4,7 @@ from yelpapi import YelpAPI
 
 
 def getDetailsFromAdress(adress):
+    #adress = adress + " stockholm"
     yelp_api = YelpAPI(
         "MrRGPpo52MhH9Rhd2mYhqVTHUTolmcqQ1ekyXhAdh15ckOCdKeEPqgMvvOCBQM149OD5CpXMlg32NRseNdbtARSn_wErkvnAaLUXwZ0EBm4uhJXucT1ULSSrX9vwXXYx")
     response = yelp_api.search_query(location=adress, radius=2000, limit=1)
@@ -37,5 +38,3 @@ def updateDfWithYelpDetails(df, fromRow, toRow):
         df.at[i, 'NearbyPOIs'] = yelpResponse[2]
 
     df['NearbyPOIs'] = df['NearbyPOIs'].astype('float')
-
-    # return df

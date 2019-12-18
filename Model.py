@@ -10,6 +10,12 @@ from xgboost import XGBRegressor
 from sklearn.metrics import accuracy_score
 
 
+from sklearn.metrics import mean_absolute_error
+from sklearn.tree import DecisionTreeRegressor
+
+from ModelEvaluation import tryParameters
+
+
 def getPredictions(df, features, target):
     # Y
     target = df[target]
@@ -19,6 +25,11 @@ def getPredictions(df, features, target):
 
     trainFeatures, valFeatures, trainPredictionTarget, valPredictionTarget = train_test_split(
         df, target, random_state=0)
+
+    # Only for evaluation, START
+    # tryParameters(trainFeatures, valFeatures,
+    #              trainPredictionTarget, valPredictionTarget)
+    # Only for evaluation, END
 
     trainedModel = RandomForestRegressor(
         random_state=1)

@@ -52,3 +52,43 @@ def getSplitData(dataframe, predictionTarget):
         dataframe, predictionTarget, random_state=0)
 
     return trainFeatures, valFeatures, trainPredictionTarget, valPredictionTarget
+
+
+def removeOutliers(
+        df, tolerance, minNum, column):
+     # Remove all outliers
+    quant = df[column].quantile(tolerance)
+    df = df[df[column] < quant]
+    df = df[df[column] > minNum]
+
+    return df
+
+
+def removeWrongCoordinates(df):
+
+    rowCount = len(df.index)
+    # Only show rows close to Stockholms coordinates. Yelp might have returned a completely different location
+    df = df.loc[df['Longitude'] > 17.6]
+    df = df.loc[df['Longitude'] < 18.3]
+    df = df.loc[df['Latitude'] < 59.45]
+    df = df.loc[df['Latitude'] > 59.2]
+
+    print("removeWrongCoordinates removed",
+          rowCount - len(df.index), "rows from apData")
+
+    return df
+
+
+def addPricePerSizeColumn(df, fromRow, toRow):
+
+    df['PricePerKvm'] = 0.0
+
+    for i in range(fromRow, toRow):
+        #df.to_csv(name, index=False)
+
+        df.at[i, 'PricePerKvm'] = round(
+            df.at[i, 'Price'] / df.at[i, 'Size'], 0)
+
+    df['PricePerKvm'] = df['PricePerKvm'].astype('float')
+
+    return df
