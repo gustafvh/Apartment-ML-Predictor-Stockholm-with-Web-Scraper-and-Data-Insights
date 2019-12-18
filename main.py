@@ -92,9 +92,7 @@ def main():
     # Step 2 - Read final datafile, and use as dataframe
     apData = pd.read_csv('./Data/FilteredApData.csv')
 
-    #apData.to_csv('FilteredApData.csv', index=False)
-
-    # Step 5 - Get a trained model based on dataframe
+    # Step 3 - Get a trained model based on dataframe
     featuresToTrainOn = ['Date', 'Size', 'Rooms']
     target = 'Price'
 
@@ -102,20 +100,18 @@ def main():
     predictions, valPredictionTarget, model = getPredictions(
         apData, featuresToTrainOn, target)
 
+    # Step 4 - Print predictions accuracy
     printMeanAbsoluteError(predictions, valPredictionTarget)
     printMeanAbsolutePercentageError(predictions, valPredictionTarget)
 
-    #############################################
+    # Step 5 - Visualize output data
 
-    #showBarChart(apData.head(1000), 'Price')
-    #showScatterPlotLine(apData, 'Size', 'Price')
     # plotThreeDimensionsGraph(
     #    apData[['Latitude', 'Longitude', 'PricePerKvm']])
-    plot3DWireframe(apData[['Latitude', 'Longitude', 'PricePerKvm']])
+    #plot3DWireframe(apData[['Latitude', 'Longitude', 'PricePerKvm']])
 
     #plotPredictionsTowardsActual(valPredictionTarget, predictions)
-    print(apData.describe())
-    # print(apData.head(10))
+    print(apData.head(10))
 
 
 main()
