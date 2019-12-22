@@ -14,6 +14,7 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.tree import DecisionTreeRegressor
 
 from ModelEvaluation import tryParameters
+from VisualizeData import featureImportance, featuresCorrelation
 
 
 def getPredictions(df, features, target):
@@ -35,6 +36,10 @@ def getPredictions(df, features, target):
         random_state=1)
 
     trainedModel.fit(trainFeatures, trainPredictionTarget)
+
+    # Test which features affect the prediction target the most
+    #featureImportance(trainedModel, trainFeatures, 7)
+    #featuresCorrelation(df, trainFeatures, trainPredictionTarget)
 
     modelPredictions = trainedModel.predict(
         valFeatures)

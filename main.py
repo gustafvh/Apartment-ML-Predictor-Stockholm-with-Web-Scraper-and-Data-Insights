@@ -93,12 +93,15 @@ def main():
     apData = pd.read_csv('./Data/FilteredApData.csv')
 
     # Step 3 - Get a trained model based on dataframe
-    featuresToTrainOn = ['Date', 'Size', 'Rooms']
+    featuresToTrainOn = ['Size', 'NearbyPOIs', 'Latitude', 'Longitude']
     target = 'Price'
 
     # Predictions is array with predictions
     predictions, valPredictionTarget, model = getPredictions(
         apData, featuresToTrainOn, target)
+
+    print(apData.info())
+    print(apData.head())
 
     # Step 4 - Print predictions accuracy
     printMeanAbsoluteError(predictions, valPredictionTarget)
@@ -111,7 +114,8 @@ def main():
     #plot3DWireframe(apData[['Latitude', 'Longitude', 'PricePerKvm']])
 
     #plotPredictionsTowardsActual(valPredictionTarget, predictions)
-    print(apData.head(10))
+
+    # Göra om Broker till category labeling och se om det finns en koppling där
 
 
 main()

@@ -109,3 +109,20 @@ def plotThreeDimensionsGraph(df):
     ax.plot_trisurf(df['Longitude'], df['Latitude'], df['PricePerKvm'],
                     cmap=plt.cm.jet, alpha=0.2, linewidth=0, antialiased=True)
     plt.show()
+
+
+def featureImportance(trainedModel, trainFeatures, numOfFeatures):
+    print("feature_importances", trainedModel.feature_importances_)
+    feat_importances = pd.Series(
+        trainedModel.feature_importances_, index=trainFeatures.columns)
+    feat_importances.nlargest(numOfFeatures).plot(kind='barh')
+    plt.show()
+
+
+def featuresCorrelation(df, trainFeatures, trainPredictionTarget):
+    corrmat = df.corr()
+    top_corr_features = corrmat.index
+    # plot heat map
+    g = sns.heatmap(df[top_corr_features].corr(), vmin=0,
+                    vmax=1, annot=True, cmap="RdYlGn", square=True)
+    plt.show()

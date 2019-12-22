@@ -99,6 +99,8 @@ def getAllApartmentsInPage(driver):
     totalData = [apDate, apAdress,
                  apSize, apRooms, apBroker, apRent, apPrice]
 
+    print(totalData)
+
     totalDataFrame = createDataframe(totalData)
 
     return totalDataFrame
