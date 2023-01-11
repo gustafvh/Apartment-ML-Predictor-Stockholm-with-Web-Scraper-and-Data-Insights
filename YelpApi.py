@@ -1,12 +1,12 @@
 # https://www.yelp.com/developers/documentation/v3/business_search
 
 from yelpapi import YelpAPI
-
+import config
 
 def getDetailsFromAdress(adress):
     #adress = adress + " stockholm"
     yelp_api = YelpAPI(
-        "MrRGPpo52MhH9Rhd2mYhqVTHUTolmcqQ1ekyXhAdh15ckOCdKeEPqgMvvOCBQM149OD5CpXMlg32NRseNdbtARSn_wErkvnAaLUXwZ0EBm4uhJXucT1ULSSrX9vwXXYx")
+        {config.yelp_api_key})
     response = yelp_api.search_query(location=adress, radius=2000, limit=1)
     # print(response)
     latitude = response['region']['center']['latitude']

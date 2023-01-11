@@ -25,11 +25,12 @@ def getRowsFromHnet(driver, numberOfPages):
 
 
 def writeToCsv(dataframe):
-    dataframe.to_csv('hnetData.csv', index=False)
+    dataframe.to_csv('./Data/hnetData.csv', index=False)
 
 
 def getAllSegments():
     apData = pd.DataFrame()
+    # segments = [20, 25] #For testing
     segments = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65,
                 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 250]
 
@@ -37,17 +38,8 @@ def getAllSegments():
         driver = initCrawler(segments[i], segments[i+1])
         apDataNew = getRowsFromHnet(driver, 50)
         apData = apData.append(apDataNew, ignore_index=True)
-
+    writeToCsv(apData)
     return apData
-
-
-def createYelpData():
-    apData = pd.read_csv('./Data/hnetData.csv')
-
-    apData = cleanAndConvertToNum(apData)
-
-    # creates file named 'yelpDataX-Y.csv'
-    apData = updateDfWithYelpDetails(apData, 0, 4000)
 
 
 def cleanData():
@@ -66,33 +58,33 @@ def preProcess():
     cleanData()
 
     # Step 1.3 - Read CSV and make import and add Yelp Data
-    apData = pd.read_csv('./Data/CleanApData.csv')
-    apData = updateDfWithYelpDetails(apData, 13725, 14210)
+    apData = pd.read_csv('./Data/CleanHnetData.csv')
+    apData = updateDfWithYelpDetails(apData, 0, len(apData))
 
-    # Step 1.4 - Include all rows with column value within X % of data and above Y value
+    # # Step 1.4 - Include all rows with column value within X % of data and above Y value
     apData = removeOutliers(apData, 0.80, 0, 'Price')
     apData = removeOutliers(apData, 0.80, 100, 'Rent')
 
-    # Step 1.5 - Read final datafile, and use as dataframe
-    apData = pd.read_csv('./yelpDataGather.csv')
+    # # Step 1.5 - Read final datafile, and use as dataframe
+    # apData = pd.read_csv('./yelpDataGather.csv')
 
-    # Step 1.6 - Add PricePerKvm Column
-    apData = addPricePerSizeColumn(apData, 0, 14222)
+    # # Step 1.6 - Add PricePerKvm Column
+    apData = addPricePerSizeColumn(apData, 0, len(apData))
 
-    # Step 1.7 - Remove coordinates that are outside Stockholms municipal
+    # # Step 1.7 - Remove coordinates that are outside Stockholms municipal
     apData = removeWrongCoordinates(apData)
-
+    apData.to_csv('./Data/FilteredApData.csv', index=False)
 
 def main():
 
     # Step 1 - Run preProcess who gets, cleans, and processes data used. Outputs file FilteredApData.csv
     #
-    # preProcess()
+    preProcess()
 
-    # Step 2 - Read final datafile, and use as dataframe
+    # # Step 2 - Read final datafile, and use as dataframe
     apData = pd.read_csv('./Data/FilteredApData.csv')
 
-    # Step 3 - Get a trained model based on dataframe
+    # # Step 3 - Get a trained model based on dataframe
     featuresToTrainOn = ['Size', 'NearbyPOIs', 'Latitude', 'Longitude']
     target = 'Price'
 
@@ -114,8 +106,6 @@ def main():
     #plot3DWireframe(apData[['Latitude', 'Longitude', 'PricePerKvm']])
 
     #plotPredictionsTowardsActual(valPredictionTarget, predictions)
-
-    # Göra om Broker till category labeling och se om det finns en koppling där
 
 
 main()
