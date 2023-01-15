@@ -1,18 +1,7 @@
-import numpy as np
-import pandas as pd
-import seaborn as sns
 from sklearn.model_selection import train_test_split
-
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
-from xgboost import XGBRegressor
-
 from sklearn.metrics import accuracy_score
-
-
 from sklearn.metrics import mean_absolute_error
-from sklearn.tree import DecisionTreeRegressor
-
 from ModelEvaluation import tryParameters
 from VisualizeData import featureImportance, featuresCorrelation
 
@@ -33,7 +22,7 @@ def getPredictions(df, features, target):
     # Only for evaluation, END
 
     trainedModel = RandomForestRegressor(
-        random_state=1)
+        random_state=1477)
 
     trainedModel.fit(trainFeatures, trainPredictionTarget)
 

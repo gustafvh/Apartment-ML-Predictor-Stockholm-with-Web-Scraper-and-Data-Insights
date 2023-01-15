@@ -1,18 +1,6 @@
 import pandas as pd
-import numpy as np
-
-from mpl_toolkits.mplot3d import Axes3D
-
-
 from WebScraper.WebScraper import *
-from ProcessData import cleanAndConvertToNum, removeOutliers, removeWrongCoordinates, addPricePerSizeColumn
-from YelpApi import updateDfWithYelpDetails
-from VisualizeData import showBarChart, showHeatMap, showScatterPlotLine, plotPredictionsTowardsActual, plotThreeDimensionsGraph, plot3DWireframe
-from Model import getPredictions
-from Accuracy import printMeanAbsoluteError, printMeanAbsolutePercentageError
-
-import time
-
+from ProcessData import cleanAndConvertToNum
 
 def getRowsFromHnet(driver, numberOfPages):
     # One page is 50 rows

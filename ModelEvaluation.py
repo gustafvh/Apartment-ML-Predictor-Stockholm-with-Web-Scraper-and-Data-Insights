@@ -1,23 +1,10 @@
-import numpy as np
-import pandas as pd
-import seaborn as sns
-from sklearn.model_selection import train_test_split
-
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
-from xgboost import XGBRegressor
-
-from sklearn.metrics import accuracy_score
-
-
 from sklearn.metrics import mean_absolute_error
-from sklearn.tree import DecisionTreeRegressor
-
 
 # From Kaggle
 def get_mae(max_leaf_nodes, train_X, val_X, train_y, val_y):
     model = RandomForestRegressor(
-        max_leaf_nodes=max_leaf_nodes, random_state=0)
+        max_leaf_nodes=max_leaf_nodes, random_state=1477)
     model.fit(train_X, train_y)
     preds_val = model.predict(val_X)
     mae = mean_absolute_error(val_y, preds_val)
